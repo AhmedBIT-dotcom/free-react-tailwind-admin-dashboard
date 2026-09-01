@@ -21,6 +21,8 @@ import Home from "./pages/Dashboard/Home";
 import ServiceRequests from "./pages/ServiceRequests";
 import Users from "./pages/Users";
 import Services from "./pages/Services";
+import ProviderLayout from "./layout/ProviderLayout";
+import ProviderDashboard from "./pages/Provider/Dashboard";
 
 export default function App() {
   return (
@@ -57,6 +59,12 @@ export default function App() {
             {/* Charts */}
             <Route path="/line-chart" element={<LineChart />} />
             <Route path="/bar-chart" element={<BarChart />} />
+          </Route>
+
+          {/* Provider Layout */}
+          <Route path="/provider" element={<ProviderLayout />}>
+            <Route index element={<ProviderDashboard />} />
+            {/* Additional Provider routes will be added here later */}
           </Route>
 
           {/* Auth Layout */}
