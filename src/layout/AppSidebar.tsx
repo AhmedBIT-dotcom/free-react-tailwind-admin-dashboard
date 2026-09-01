@@ -1,103 +1,150 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-// Assume these icons are imported from an icon library
 import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
   GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
+  GroupIcon,
+  BoxCubeIcon,
+  DocsIcon,
   PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
+  DollarLineIcon,
+  ShootingStarIcon,
+  AlertIcon,
+  ChatIcon,
+  MailIcon,
+  PieChartIcon,
+  CalenderIcon,
+  HorizontaLDots,
+  ChevronDownIcon
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
-  name: string;
+  nameAr: string;
+  nameEn: string;
   icon: React.ReactNode;
   path?: string;
-  subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  subItems?: { nameAr: string; nameEn: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
+const mainItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  },
-  {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    nameAr: "لوحة التحكم",
+    nameEn: "Dashboard",
+    path: "/",
   },
 ];
 
-const othersItems: NavItem[] = [
+const managementItems: NavItem[] = [
   {
-    icon: <PieChartIcon />,
-    name: "Charts",
-    subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
-    ],
+    icon: <GroupIcon />,
+    nameAr: "المستخدمون",
+    nameEn: "Users",
+    path: "/users",
   },
   {
     icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
-    ],
+    nameAr: "الخدمات",
+    nameEn: "Services",
+    path: "/services",
+  },
+  {
+    icon: <DocsIcon />,
+    nameAr: "طلبات الخدمة",
+    nameEn: "Service Requests",
+    path: "/service-requests",
   },
   {
     icon: <PlugInIcon />,
-    name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
-    ],
+    nameAr: "مقدمو الخدمات",
+    nameEn: "Service Providers",
+    path: "/providers",
   },
+];
+
+const operationsItems: NavItem[] = [
+  {
+    icon: <DollarLineIcon />,
+    nameAr: "المدفوعات",
+    nameEn: "Payments",
+    path: "/payments",
+  },
+  {
+    icon: <ShootingStarIcon />,
+    nameAr: "التقييمات",
+    nameEn: "Reviews",
+    path: "/reviews",
+  },
+  {
+    icon: <AlertIcon />,
+    nameAr: "الشكاوى والنزاعات",
+    nameEn: "Complaints & Disputes",
+    path: "/disputes",
+  },
+  {
+    icon: <ChatIcon />,
+    nameAr: "المحادثات",
+    nameEn: "Messages",
+    path: "/messages",
+  },
+  {
+    icon: <MailIcon />,
+    nameAr: "الإشعارات",
+    nameEn: "Notifications",
+    path: "/notifications",
+  },
+];
+
+const analyticsItems: NavItem[] = [
+  {
+    icon: <PieChartIcon />,
+    nameAr: "التقارير",
+    nameEn: "Reports",
+    path: "/reports",
+  },
+];
+
+const otherItems: NavItem[] = [
+  {
+    icon: <CalenderIcon />,
+    nameAr: "التقويم",
+    nameEn: "Calendar",
+    path: "/calendar",
+  },
+  {
+    icon: <HorizontaLDots />,
+    nameAr: "الإعدادات",
+    nameEn: "Settings",
+    path: "/settings",
+  },
+];
+
+const menuGroups = [
+  { titleAr: "صنّعة", titleEn: "San'ah", items: mainItems, menuType: "main" },
+  { titleAr: "الإدارة", titleEn: "Management", items: managementItems, menuType: "management" },
+  { titleAr: "العمليات", titleEn: "Operations", items: operationsItems, menuType: "operations" },
+  { titleAr: "التحليلات", titleEn: "Analytics", items: analyticsItems, menuType: "analytics" },
+  { titleAr: "أخرى", titleEn: "Other", items: otherItems, menuType: "other" },
 ];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
 
+  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsRtl(document.documentElement.dir === "rtl");
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
+    return () => observer.disconnect();
+  }, []);
+
   const [openSubmenu, setOpenSubmenu] = useState<{
-    type: "main" | "others";
+    type: string;
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
@@ -113,14 +160,13 @@ const AppSidebar: React.FC = () => {
 
   useEffect(() => {
     let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
-      items.forEach((nav, index) => {
+    menuGroups.forEach((group) => {
+      group.items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
               setOpenSubmenu({
-                type: menuType as "main" | "others",
+                type: group.menuType,
                 index,
               });
               submenuMatched = true;
@@ -147,7 +193,7 @@ const AppSidebar: React.FC = () => {
     }
   }, [openSubmenu]);
 
-  const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
+  const handleSubmenuToggle = (index: number, menuType: string) => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
         prevOpenSubmenu &&
@@ -160,10 +206,10 @@ const AppSidebar: React.FC = () => {
     });
   };
 
-  const renderMenuItems = (items: NavItem[], menuType: "main" | "others") => (
+  const renderMenuItems = (items: NavItem[], menuType: string) => (
     <ul className="flex flex-col gap-4">
       {items.map((nav, index) => (
-        <li key={nav.name}>
+        <li key={nav.nameEn}>
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
@@ -187,7 +233,7 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item-text">{nav.name}</span>
+                <span className="menu-item-text">{isRtl ? nav.nameAr : nav.nameEn}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
@@ -218,7 +264,7 @@ const AppSidebar: React.FC = () => {
                   {nav.icon}
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className="menu-item-text">{nav.name}</span>
+                  <span className="menu-item-text">{isRtl ? nav.nameAr : nav.nameEn}</span>
                 )}
               </Link>
             )
@@ -238,7 +284,7 @@ const AppSidebar: React.FC = () => {
             >
               <ul className="mt-2 space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
-                  <li key={subItem.name}>
+                  <li key={subItem.nameEn}>
                     <Link
                       to={subItem.path}
                       className={`menu-dropdown-item ${
@@ -247,7 +293,7 @@ const AppSidebar: React.FC = () => {
                           : "menu-dropdown-item-inactive"
                       }`}
                     >
-                      {subItem.name}
+                      {isRtl ? subItem.nameAr : subItem.nameEn}
                       <span className="flex items-center gap-1 ml-auto">
                         {subItem.new && (
                           <span
@@ -334,38 +380,24 @@ const AppSidebar: React.FC = () => {
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
-            <div>
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Menu"
-                ) : (
-                  <HorizontaLDots className="size-6" />
-                )}
-              </h2>
-              {renderMenuItems(navItems, "main")}
-            </div>
-            <div className="">
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(othersItems, "others")}
-            </div>
+            {menuGroups.map((group) => (
+              <div key={group.menuType}>
+                <h2
+                  className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                    !isExpanded && !isHovered
+                      ? "lg:justify-center"
+                      : "justify-start"
+                  }`}
+                >
+                  {isExpanded || isHovered || isMobileOpen ? (
+                    isRtl ? group.titleAr : group.titleEn
+                  ) : (
+                    <HorizontaLDots className="size-6" />
+                  )}
+                </h2>
+                {renderMenuItems(group.items, group.menuType)}
+              </div>
+            ))}
           </div>
         </nav>
         {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
