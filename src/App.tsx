@@ -23,6 +23,7 @@ import Users from "./pages/Users";
 import Services from "./pages/Services";
 import ProviderLayout from "./layout/ProviderLayout";
 import ProviderDashboard from "./pages/Provider/Dashboard";
+import ProviderRequests from "./pages/Provider/Requests";
 
 export default function App() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
           {/* Provider Layout */}
           <Route path="/provider" element={<ProviderLayout />}>
             <Route index element={<ProviderDashboard />} />
+            <Route path="requests" element={<ProviderRequests />} />
             {/* Additional Provider routes will be added here later */}
           </Route>
 
