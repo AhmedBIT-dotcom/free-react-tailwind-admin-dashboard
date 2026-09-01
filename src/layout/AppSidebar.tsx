@@ -28,72 +28,113 @@ type NavItem = {
   subItems?: { nameAr: string; nameEn: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const mainItems: NavItem[] = [
+const operationsItems: NavItem[] = [
   {
     icon: <GridIcon />,
     nameAr: "لوحة التحكم",
     nameEn: "Dashboard",
     path: "/",
   },
-];
-
-const managementItems: NavItem[] = [
   {
     icon: <GroupIcon />,
     nameAr: "المستخدمون",
     nameEn: "Users",
-    path: "/users",
+    subItems: [
+      { nameAr: "جميع المستخدمين", nameEn: "All Users", path: "/users" },
+      { nameAr: "العملاء", nameEn: "Customers", path: "/users/customers" },
+      { nameAr: "مقدمو الخدمات", nameEn: "Service Providers", path: "/users/providers" },
+      { nameAr: "المدراء", nameEn: "Administrators", path: "/users/admins" },
+    ]
   },
   {
     icon: <BoxCubeIcon />,
     nameAr: "الخدمات",
     nameEn: "Services",
-    path: "/services",
+    subItems: [
+      { nameAr: "جميع الخدمات", nameEn: "All Services", path: "/services" },
+      { nameAr: "إضافة خدمة", nameEn: "Add Service", path: "/services/add" },
+      { nameAr: "الفئات", nameEn: "Categories", path: "/services/categories" },
+      { nameAr: "المراجعة", nameEn: "Review", path: "/services/review" },
+    ]
   },
   {
     icon: <DocsIcon />,
     nameAr: "طلبات الخدمة",
     nameEn: "Service Requests",
-    path: "/service-requests",
+    subItems: [
+      { nameAr: "جميع الطلبات", nameEn: "All Requests", path: "/service-requests" },
+      { nameAr: "جديدة", nameEn: "New", path: "/service-requests/new" },
+      { nameAr: "قيد الانتظار", nameEn: "Pending", path: "/service-requests/pending" },
+      { nameAr: "مقبولة", nameEn: "Accepted", path: "/service-requests/accepted" },
+      { nameAr: "قيد التنفيذ", nameEn: "In Progress", path: "/service-requests/in-progress" },
+      { nameAr: "مكتملة", nameEn: "Completed", path: "/service-requests/completed" },
+      { nameAr: "ملغاة", nameEn: "Cancelled", path: "/service-requests/cancelled" },
+      { nameAr: "متنازع عليها", nameEn: "Disputed", path: "/service-requests/disputed" },
+    ]
   },
   {
     icon: <PlugInIcon />,
     nameAr: "مقدمو الخدمات",
     nameEn: "Service Providers",
-    path: "/providers",
+    subItems: [
+      { nameAr: "جميع مقدمي الخدمات", nameEn: "All Providers", path: "/providers" },
+      { nameAr: "طلبات الانضمام", nameEn: "Join Requests", path: "/providers/requests" },
+      { nameAr: "المعتمدون", nameEn: "Approved", path: "/providers/approved" },
+      { nameAr: "الموقوفون", nameEn: "Suspended", path: "/providers/suspended" },
+    ]
   },
 ];
 
-const operationsItems: NavItem[] = [
+const managementItems: NavItem[] = [
   {
     icon: <DollarLineIcon />,
     nameAr: "المدفوعات",
     nameEn: "Payments",
-    path: "/payments",
+    subItems: [
+      { nameAr: "جميع المدفوعات", nameEn: "All Payments", path: "/payments" },
+      { nameAr: "المكتملة", nameEn: "Completed", path: "/payments/completed" },
+      { nameAr: "المعلقة", nameEn: "Pending", path: "/payments/pending" },
+      { nameAr: "المستردة", nameEn: "Refunded", path: "/payments/refunded" },
+    ]
   },
   {
     icon: <ShootingStarIcon />,
     nameAr: "التقييمات",
     nameEn: "Reviews",
-    path: "/reviews",
+    subItems: [
+      { nameAr: "جميع التقييمات", nameEn: "All Reviews", path: "/reviews" },
+      { nameAr: "التقييمات الجديدة", nameEn: "New Reviews", path: "/reviews/new" },
+      { nameAr: "التقييمات المبلغ عنها", nameEn: "Reported Reviews", path: "/reviews/reported" },
+    ]
   },
   {
     icon: <AlertIcon />,
     nameAr: "الشكاوى والنزاعات",
     nameEn: "Complaints & Disputes",
-    path: "/disputes",
+    subItems: [
+      { nameAr: "جميع الشكاوى", nameEn: "All Complaints", path: "/disputes" },
+      { nameAr: "الشكاوى المفتوحة", nameEn: "Open Complaints", path: "/disputes/open" },
+      { nameAr: "قيد المعالجة", nameEn: "In Progress", path: "/disputes/progress" },
+      { nameAr: "المغلقة", nameEn: "Closed", path: "/disputes/closed" },
+    ]
   },
   {
     icon: <ChatIcon />,
     nameAr: "المحادثات",
     nameEn: "Messages",
-    path: "/messages",
+    subItems: [
+      { nameAr: "جميع المحادثات", nameEn: "All Messages", path: "/messages" },
+      { nameAr: "المحادثات المبلغ عنها", nameEn: "Reported Messages", path: "/messages/reported" },
+    ]
   },
   {
     icon: <MailIcon />,
     nameAr: "الإشعارات",
     nameEn: "Notifications",
-    path: "/notifications",
+    subItems: [
+      { nameAr: "جميع الإشعارات", nameEn: "All Notifications", path: "/notifications" },
+      { nameAr: "إنشاء إشعار", nameEn: "Create Notification", path: "/notifications/create" },
+    ]
   },
 ];
 
@@ -102,7 +143,12 @@ const analyticsItems: NavItem[] = [
     icon: <PieChartIcon />,
     nameAr: "التقارير",
     nameEn: "Reports",
-    path: "/reports",
+    subItems: [
+      { nameAr: "تقارير المستخدمين", nameEn: "User Reports", path: "/reports/users" },
+      { nameAr: "تقارير الطلبات", nameEn: "Request Reports", path: "/reports/requests" },
+      { nameAr: "تقارير الخدمات", nameEn: "Service Reports", path: "/reports/services" },
+      { nameAr: "التقارير المالية", nameEn: "Financial Reports", path: "/reports/financial" },
+    ]
   },
 ];
 
@@ -111,22 +157,28 @@ const otherItems: NavItem[] = [
     icon: <CalenderIcon />,
     nameAr: "التقويم",
     nameEn: "Calendar",
-    path: "/calendar",
+    subItems: [
+      { nameAr: "جميع المواعيد", nameEn: "All Appointments", path: "/calendar" },
+      { nameAr: "المواعيد القادمة", nameEn: "Upcoming Appointments", path: "/calendar/upcoming" },
+    ]
   },
   {
     icon: <HorizontaLDots />,
     nameAr: "الإعدادات",
     nameEn: "Settings",
-    path: "/settings",
+    subItems: [
+      { nameAr: "إعدادات النظام", nameEn: "System Settings", path: "/settings/system" },
+      { nameAr: "إعدادات الحساب", nameEn: "Account Settings", path: "/settings/account" },
+      { nameAr: "الإشعارات", nameEn: "Notifications", path: "/settings/notifications" },
+    ]
   },
 ];
 
 const menuGroups = [
-  { titleAr: "صنّعة", titleEn: "San'ah", items: mainItems, menuType: "main" },
-  { titleAr: "الإدارة", titleEn: "Management", items: managementItems, menuType: "management" },
-  { titleAr: "العمليات", titleEn: "Operations", items: operationsItems, menuType: "operations" },
-  { titleAr: "التحليلات", titleEn: "Analytics", items: analyticsItems, menuType: "analytics" },
-  { titleAr: "أخرى", titleEn: "Other", items: otherItems, menuType: "other" },
+  { titleAr: "العمليات", titleEn: "OPERATIONS", items: operationsItems, menuType: "operations" },
+  { titleAr: "الإدارة", titleEn: "MANAGEMENT", items: managementItems, menuType: "management" },
+  { titleAr: "التحليلات", titleEn: "ANALYTICS", items: analyticsItems, menuType: "analytics" },
+  { titleAr: "أخرى", titleEn: "OTHER", items: otherItems, menuType: "other" },
 ];
 
 const AppSidebar: React.FC = () => {
@@ -233,7 +285,7 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item-text">{isRtl ? nav.nameAr : nav.nameEn}</span>
+                <span className="menu-item-text font-medium text-gray-900 dark:text-white">{isRtl ? nav.nameAr : nav.nameEn}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
@@ -264,7 +316,7 @@ const AppSidebar: React.FC = () => {
                   {nav.icon}
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className="menu-item-text">{isRtl ? nav.nameAr : nav.nameEn}</span>
+                  <span className="menu-item-text font-medium text-gray-900 dark:text-white">{isRtl ? nav.nameAr : nav.nameEn}</span>
                 )}
               </Link>
             )
@@ -383,7 +435,7 @@ const AppSidebar: React.FC = () => {
             {menuGroups.map((group) => (
               <div key={group.menuType}>
                 <h2
-                  className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  className={`mb-4 text-xs uppercase flex leading-[20px] font-semibold text-gray-800 dark:text-gray-200 ${
                     !isExpanded && !isHovered
                       ? "lg:justify-center"
                       : "justify-start"
