@@ -30,6 +30,7 @@ import ProviderEarnings from "./pages/Provider/Earnings";
 import ProviderReviews from "./pages/Provider/Reviews";
 import ProviderMessages from "./pages/Provider/Messages";
 import ProviderNotifications from "./pages/Provider/Notifications";
+import ProviderProfile from "./pages/Provider/Profile";
 
 export default function App() {
   return (
@@ -78,6 +79,7 @@ export default function App() {
             <Route path="reviews" element={<ProviderReviews />} />
             <Route path="messages" element={<ProviderMessages />} />
             <Route path="notifications" element={<ProviderNotifications />} />
+            <Route path="profile" element={<ProviderProfile />} />
             {/* Additional Provider routes will be added here later */}
           </Route>
 
