@@ -1,8 +1,20 @@
 import { useState, useEffect } from "react";
 import PageMeta from "../../../components/common/PageMeta";
+import { PlusIcon } from "../../../icons";
+import { useTheme } from "../../../context/ThemeContext";
+
+import ProviderKpiCards from "../../../components/provider/ProviderKpiCards";
+import ProviderRecentRequests from "../../../components/provider/ProviderRecentRequests";
+import ProviderEarningsChart from "../../../components/provider/ProviderEarningsChart";
+import ProviderRatings from "../../../components/provider/ProviderRatings";
+import ProviderAppointments from "../../../components/provider/ProviderAppointments";
+import ProviderNotifications from "../../../components/provider/ProviderNotifications";
+import ProviderServices from "../../../components/provider/ProviderServices";
 
 export default function ProviderDashboard() {
   const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -19,60 +31,50 @@ export default function ProviderDashboard() {
         description={isRtl ? "لوحة تحكم مقدم الخدمة" : "Provider Dashboard"}
       />
       
-      <div className="flex flex-col mb-6 gap-2">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white/90">
-          {isRtl ? "مرحباً أحمد 👋" : "Welcome Ahmed 👋"}
-        </h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {isRtl ? "إليك ملخص أعمالك اليوم" : "Here is your summary for today"}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
-        {/* KPI Cards Placeholder */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{isRtl ? "إجمالي الطلبات" : "Total Requests"}</h4>
-          <p className="font-bold text-gray-800 text-title-sm dark:text-white/90">48</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white/90">
+            {isRtl ? "مرحباً أحمد 👋" : "Welcome Ahmed 👋"}
+          </h2>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {isRtl ? "إليك ملخص أعمالك اليوم" : "Here is your business summary for today"}
+          </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{isRtl ? "الطلبات المكتملة" : "Completed Requests"}</h4>
-          <p className="font-bold text-gray-800 text-title-sm dark:text-white/90">26</p>
-        </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{isRtl ? "الطلبات قيد التنفيذ" : "In Progress Requests"}</h4>
-          <p className="font-bold text-gray-800 text-title-sm dark:text-white/90">15</p>
-        </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{isRtl ? "إجمالي الأرباح" : "Total Earnings"}</h4>
-          <p className="font-bold text-gray-800 text-title-sm dark:text-white/90">{isRtl ? "4,850 ر.ي" : "4,850 YER"}</p>
+        
+        <div>
+          <button className="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            <PlusIcon className="w-5 h-5" />
+            {isRtl ? "إضافة خدمة" : "Add Service"}
+          </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
-        {/* Recent Requests Placeholder */}
-        <div className="col-span-1 xl:col-span-2 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold text-gray-800 dark:text-white/90">
-              {isRtl ? "الطلبات الأخيرة" : "Recent Requests"}
-            </h3>
-            <button className="text-sm text-brand-500 dark:text-brand-400 hover:underline">
-              {isRtl ? "عرض الكل" : "View All"}
-            </button>
+      <div className="space-y-4 md:space-y-6">
+        <ProviderKpiCards isRtl={isRtl} />
+
+        {/* Middle Row: Requests, Earnings, Ratings */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="lg:col-span-1">
+            <ProviderRecentRequests isRtl={isRtl} />
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400 text-center py-10 border border-dashed border-gray-200 dark:border-gray-800 rounded-xl">
-            {isRtl ? "لا توجد طلبات أخيرة." : "No recent requests."}
+          <div className="lg:col-span-1">
+            <ProviderEarningsChart isRtl={isRtl} isDark={isDark} />
+          </div>
+          <div className="lg:col-span-1">
+            <ProviderRatings isRtl={isRtl} isDark={isDark} />
           </div>
         </div>
 
-        {/* Ratings Placeholder */}
-        <div className="col-span-1 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-          <h3 className="font-semibold text-gray-800 dark:text-white/90 mb-4">
-            {isRtl ? "تقييم العملاء" : "Customer Ratings"}
-          </h3>
-          <div className="flex items-center justify-center py-8">
-            <div className="w-32 h-32 rounded-full border-8 border-brand-500 flex items-center justify-center">
-              <span className="text-2xl font-bold text-gray-800 dark:text-white">4.8</span>
-            </div>
+        {/* Bottom Row: Notifications, Appointments, Services */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="lg:col-span-1">
+            <ProviderNotifications isRtl={isRtl} />
+          </div>
+          <div className="lg:col-span-1">
+            <ProviderAppointments isRtl={isRtl} />
+          </div>
+          <div className="lg:col-span-1">
+            <ProviderServices isRtl={isRtl} />
           </div>
         </div>
       </div>
