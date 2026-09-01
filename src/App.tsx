@@ -19,6 +19,7 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import ServiceRequests from "./pages/ServiceRequests";
+import Users from "./pages/Users";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
             <Route path="/service-requests" element={<ServiceRequests />} />
+            <Route path="/users" element={<Users />} />
 
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
