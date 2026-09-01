@@ -27,6 +27,7 @@ import ProviderRequests from "./pages/Provider/Requests";
 import ProviderServices from "./pages/Provider/Services";
 import ProviderAppointments from "./pages/Provider/Appointments";
 import ProviderEarnings from "./pages/Provider/Earnings";
+import ProviderReviews from "./pages/Provider/Reviews";
 
 export default function App() {
   return (
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="services" element={<ProviderServices />} />
             <Route path="appointments" element={<ProviderAppointments />} />
             <Route path="earnings" element={<ProviderEarnings />} />
+            <Route path="reviews" element={<ProviderReviews />} />
             {/* Additional Provider routes will be added here later */}
           </Route>
 
