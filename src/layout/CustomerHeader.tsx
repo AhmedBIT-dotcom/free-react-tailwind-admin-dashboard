@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useSidebar } from "../context/SidebarContext";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
-import NotificationDropdown from "../components/header/NotificationDropdown";
+import CustomerNotificationDropdown from "../components/customer/notifications/CustomerNotificationDropdown";
 import UserDropdown from "../components/header/UserDropdown";
 
 const CustomerHeader: React.FC = () => {
@@ -153,7 +153,7 @@ const CustomerHeader: React.FC = () => {
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
             <ThemeToggleButton />
-            <NotificationDropdown />
+            <CustomerNotificationDropdown />
           </div>
           <UserDropdown />
         </div>
