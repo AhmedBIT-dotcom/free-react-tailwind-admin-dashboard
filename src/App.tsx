@@ -36,6 +36,7 @@ import CustomerHome from "./pages/Customer/CustomerHome";
 import CustomerSearch from "./pages/Customer/CustomerSearch";
 import CustomerServices from "./pages/Customer/CustomerServices";
 import CustomerRequests from "./pages/Customer/CustomerRequests";
+import CustomerRequestDetails from "./pages/Customer/CustomerRequestDetails";
 
 export default function App() {
   return (
@@ -93,6 +94,7 @@ export default function App() {
             <Route path="search" element={<CustomerSearch />} />
             <Route path="services" element={<CustomerServices />} />
             <Route path="requests" element={<CustomerRequests />} />
+            <Route path="requests/:id" element={<CustomerRequestDetails />} />
             {/* Additional Customer routes will be added here later */}
           </Route>
 

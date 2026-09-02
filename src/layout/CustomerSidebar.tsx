@@ -108,7 +108,12 @@ const CustomerSidebar: React.FC = () => {
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const isActive = useCallback(
-    (path: string) => location.pathname === path,
+    (path: string) => {
+      if (path === "/customer/requests" && location.pathname.startsWith("/customer/requests")) {
+        return true;
+      }
+      return location.pathname === path;
+    },
     [location.pathname]
   );
 
@@ -246,9 +251,12 @@ const CustomerSidebar: React.FC = () => {
                           ? "menu-dropdown-item-active"
                           : "menu-dropdown-item-inactive"
                       }`}
+                      title={isRtl ? subItem.nameAr : subItem.nameEn}
                     >
-                      {isRtl ? subItem.nameAr : subItem.nameEn}
-                      <span className="flex items-center gap-1 ml-auto">
+                      <span className="truncate">
+                        {isRtl ? subItem.nameAr : subItem.nameEn}
+                      </span>
+                      <span className="flex items-center gap-1 ml-auto shrink-0">
                         {subItem.new && (
                           <span
                             className={`ml-auto ${
