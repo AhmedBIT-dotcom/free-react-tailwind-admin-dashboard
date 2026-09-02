@@ -31,6 +31,8 @@ import ProviderReviews from "./pages/Provider/Reviews";
 import ProviderMessages from "./pages/Provider/Messages";
 import ProviderNotifications from "./pages/Provider/Notifications";
 import ProviderProfile from "./pages/Provider/Profile";
+import CustomerLayout from "./layout/CustomerLayout";
+import CustomerHome from "./pages/Customer/CustomerHome";
 
 export default function App() {
   return (
@@ -81,6 +83,12 @@ export default function App() {
             <Route path="notifications" element={<ProviderNotifications />} />
             <Route path="profile" element={<ProviderProfile />} />
             {/* Additional Provider routes will be added here later */}
+          </Route>
+
+          {/* Customer Layout */}
+          <Route path="/customer" element={<CustomerLayout />}>
+            <Route index element={<CustomerHome />} />
+            {/* Additional Customer routes will be added here later */}
           </Route>
 
           {/* Auth Layout */}
