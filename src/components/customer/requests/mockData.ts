@@ -7,6 +7,8 @@ export type RequestStatus =
   | "CUSTOMER_CONFIRMED" 
   | "CLOSED";
 
+export type PaymentTiming = "BEFORE_SERVICE" | "DURING_SERVICE" | "AFTER_SERVICE";
+
 export interface ServiceRequest {
   id: string;
   serviceNameAr: string;
@@ -18,6 +20,7 @@ export interface ServiceRequest {
   durationAr: string;
   durationEn: string;
   totalAmount: number;
+  paymentTiming: PaymentTiming;
   status: RequestStatus;
 }
 
@@ -33,6 +36,7 @@ export const mockCustomerRequests: ServiceRequest[] = [
     durationAr: "يوم واحد",
     durationEn: "1 Day",
     totalAmount: 450,
+    paymentTiming: "AFTER_SERVICE",
     status: "PENDING"
   },
   {
@@ -46,6 +50,7 @@ export const mockCustomerRequests: ServiceRequest[] = [
     durationAr: "3 أيام",
     durationEn: "3 Days",
     totalAmount: 1200,
+    paymentTiming: "DURING_SERVICE",
     status: "IN_PROGRESS"
   },
   {
@@ -59,6 +64,7 @@ export const mockCustomerRequests: ServiceRequest[] = [
     durationAr: "نصف يوم",
     durationEn: "Half Day",
     totalAmount: 300,
+    paymentTiming: "AFTER_SERVICE",
     status: "PROVIDER_COMPLETED"
   },
   {
@@ -72,6 +78,7 @@ export const mockCustomerRequests: ServiceRequest[] = [
     durationAr: "يومان",
     durationEn: "2 Days",
     totalAmount: 850,
+    paymentTiming: "BEFORE_SERVICE",
     status: "CLOSED"
   },
   {
@@ -85,6 +92,7 @@ export const mockCustomerRequests: ServiceRequest[] = [
     durationAr: "يوم واحد",
     durationEn: "1 Day",
     totalAmount: 600,
+    paymentTiming: "BEFORE_SERVICE",
     status: "ACCEPTED"
   }
 ];

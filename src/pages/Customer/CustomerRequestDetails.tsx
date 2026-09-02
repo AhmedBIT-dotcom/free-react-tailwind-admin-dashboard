@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { mockCustomerRequests, getStatusDetails, RequestStatus } from "../../components/customer/requests/mockData";
+import CustomerPaymentSection from "../../components/customer/payment/CustomerPaymentSection";
+import { mockPaymentProofs } from "../../components/customer/payment/mockPaymentData";
 
 const STATUS_ORDER: RequestStatus[] = [
   "PENDING",
@@ -59,6 +61,7 @@ export default function CustomerRequestDetails() {
   }
 
   const statusDetails = getStatusDetails(request.status, isRtl);
+  const paymentProof = mockPaymentProofs.find((proof) => proof.requestId === id);
   const formattedDate = new Date(request.requestDate).toLocaleDateString(isRtl ? 'ar-SA' : 'en-US', {
     year: 'numeric',
     month: 'long',
@@ -194,6 +197,10 @@ export default function CustomerRequestDetails() {
               </div>
             </div>
           </div>
+
+          {/* Payment & Proof Section */}
+          <CustomerPaymentSection request={request} paymentProof={paymentProof} isRtl={isRtl} />
+
         </div>
 
         {/* Sidebar Column - Service & Provider Info */}
