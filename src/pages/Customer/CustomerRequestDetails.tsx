@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router";
 import { mockCustomerRequests, getStatusDetails, RequestStatus } from "../../components/customer/requests/mockData";
 import CustomerPaymentSection from "../../components/customer/payment/CustomerPaymentSection";
 import { mockPaymentProofs } from "../../components/customer/payment/mockPaymentData";
+import { mockMessages } from "../../components/customer/messages/mockMessages";
 
 const STATUS_ORDER: RequestStatus[] = [
   "PENDING",
@@ -17,6 +18,7 @@ const STATUS_ORDER: RequestStatus[] = [
 export default function CustomerRequestDetails() {
   const { id } = useParams<{ id: string }>();
   const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const messageCount = id ? mockMessages.filter((m) => m.requestId === id).length : 0;
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -200,6 +202,44 @@ export default function CustomerRequestDetails() {
 
           {/* Payment & Proof Section */}
           <CustomerPaymentSection request={request} paymentProof={paymentProof} isRtl={isRtl} />
+
+          {/* Messages Section */}
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 sm:p-8 shadow-theme-sm">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center text-brand-500">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.5 19H8C4 19 2 18 2 13V8C2 4 4 2 8 2H16C20 2 22 4 22 8V13C22 17 20 19 16 19H15.5C15.19 19 14.89 19.15 14.7 19.4L13.2 21.4C12.54 22.28 11.46 22.28 10.8 21.4L9.3 19.4C9.14 19.18 8.77 19 8.5 19Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                  {isRtl ? "الرسائل" : "Messages"}
+                </h3>
+                {messageCount > 0 && (
+                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {messageCount} {isRtl ? "رسالة" : "messages"}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-6">
+              {isRtl
+                ? "تواصل مع مقدم الخدمة لمناقشة تفاصيل الطلب أو طرح الاستفسارات."
+                : "Communicate with the service provider to discuss request details or ask questions."}
+            </p>
+
+            <Link
+              to={`/customer/messages?requestId=${id}`}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg transition-colors font-medium text-sm"
+            >
+              {isRtl ? "فتح الرسائل" : "Open Messages"}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={isRtl ? "rotate-180" : ""}>
+                <path d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M3.5 12H20.33" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+          </div>
 
         </div>
 
