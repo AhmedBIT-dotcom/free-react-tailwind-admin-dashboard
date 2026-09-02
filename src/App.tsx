@@ -34,6 +34,7 @@ import ProviderProfile from "./pages/Provider/Profile";
 import CustomerLayout from "./layout/CustomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
 import CustomerSearch from "./pages/Customer/CustomerSearch";
+import CustomerServices from "./pages/Customer/CustomerServices";
 
 export default function App() {
   return (
@@ -89,6 +90,7 @@ export default function App() {
           <Route path="/customer" element={<CustomerLayout />}>
             <Route index element={<CustomerHome />} />
             <Route path="search" element={<CustomerSearch />} />
+            <Route path="services" element={<CustomerServices />} />
             {/* Additional Customer routes will be added here later */}
           </Route>
 
