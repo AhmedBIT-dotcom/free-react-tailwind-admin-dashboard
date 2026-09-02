@@ -33,6 +33,7 @@ import ProviderNotifications from "./pages/Provider/Notifications";
 import ProviderProfile from "./pages/Provider/Profile";
 import CustomerLayout from "./layout/CustomerLayout";
 import CustomerHome from "./pages/Customer/CustomerHome";
+import CustomerSearch from "./pages/Customer/CustomerSearch";
 
 export default function App() {
   return (
@@ -85,9 +86,9 @@ export default function App() {
             {/* Additional Provider routes will be added here later */}
           </Route>
 
-          {/* Customer Layout */}
           <Route path="/customer" element={<CustomerLayout />}>
             <Route index element={<CustomerHome />} />
+            <Route path="search" element={<CustomerSearch />} />
             {/* Additional Customer routes will be added here later */}
           </Route>
 
