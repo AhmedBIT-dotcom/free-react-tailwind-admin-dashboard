@@ -4,6 +4,7 @@ import { mockCustomerRequests, getStatusDetails, RequestStatus } from "../../com
 import CustomerPaymentSection from "../../components/customer/payment/CustomerPaymentSection";
 import { mockPaymentProofs } from "../../components/customer/payment/mockPaymentData";
 import { mockMessages } from "../../components/customer/messages/mockMessages";
+import CustomerDisputeSection from "../../components/customer/disputes/CustomerDisputeSection";
 
 const STATUS_ORDER: RequestStatus[] = [
   "PENDING",
@@ -202,6 +203,9 @@ export default function CustomerRequestDetails() {
 
           {/* Payment & Proof Section */}
           <CustomerPaymentSection request={request} paymentProof={paymentProof} isRtl={isRtl} />
+
+          {/* Dispute Section */}
+          <CustomerDisputeSection requestId={request.id} />
 
           {/* Messages Section */}
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 sm:p-8 shadow-theme-sm">
