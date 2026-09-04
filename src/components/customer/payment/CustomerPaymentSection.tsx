@@ -153,7 +153,7 @@ export default function CustomerPaymentSection({ request, paymentProof, isRtl }:
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none dark:text-white"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none dark:text-white dark:[color-scheme:dark]"
               />
             </div>
             <div className="flex flex-col gap-2">

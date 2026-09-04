@@ -3,9 +3,11 @@ import { DropdownItem } from "../../ui/dropdown/DropdownItem";
 import { Dropdown } from "../../ui/dropdown/Dropdown";
 import { Link } from "react-router";
 import { mockCustomerProfile } from "../profile/mockData";
+import { useLanguage } from "../../../context/LanguageContext";
 
 export default function CustomerUserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isRtl } = useLanguage();
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -49,7 +51,7 @@ export default function CustomerUserDropdown() {
       <Dropdown
         isOpen={isOpen}
         onClose={closeDropdown}
-        className="absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
+        className="absolute right-[-16px] sm:right-0 rtl:right-auto rtl:left-[-16px] sm:rtl:left-0 mt-[17px] flex w-[calc(100vw-32px)] sm:w-[260px] max-w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
@@ -83,7 +85,7 @@ export default function CustomerUserDropdown() {
                   fill=""
                 />
               </svg>
-              Account settings
+              {isRtl ? "إعدادات الحساب" : "Account settings"}
             </DropdownItem>
           </li>
         </ul>
@@ -118,7 +120,7 @@ export default function CustomerUserDropdown() {
               fill=""
             />
           </svg>
-          Sign Out
+          {isRtl ? "تسجيل الخروج" : "Sign Out"}
         </Link>
       </Dropdown>
     </div>

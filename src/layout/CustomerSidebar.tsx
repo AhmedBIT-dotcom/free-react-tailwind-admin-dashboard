@@ -11,6 +11,7 @@ import {
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
+import { useLanguage } from "../context/LanguageContext";
 
 type NavItem = {
   nameAr: string;
@@ -85,16 +86,7 @@ const menuGroups = [
 const CustomerSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
-
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
+  const { isRtl } = useLanguage();
 
   const [openSubmenu, setOpenSubmenu] = useState<{
     type: string;
@@ -292,7 +284,7 @@ const CustomerSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 rtl:left-auto rtl:right-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r rtl:border-r-0 rtl:border-l border-gray-200
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"
@@ -300,8 +292,8 @@ const CustomerSidebar: React.FC = () => {
             ? "w-[290px]"
             : "w-[90px]"
         }
-        ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
+        ${isMobileOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full"}
+        lg:translate-x-0 rtl:lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

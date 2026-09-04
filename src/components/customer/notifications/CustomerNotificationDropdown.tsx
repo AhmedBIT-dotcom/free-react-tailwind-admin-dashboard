@@ -3,6 +3,7 @@ import { Dropdown } from "../../ui/dropdown/Dropdown";
 import { DropdownItem } from "../../ui/dropdown/DropdownItem";
 import { Link } from "react-router";
 import { mockNotifications, SanahNotification } from "./mockData";
+import { useLanguage } from "../../../context/LanguageContext";
 
 const NotificationIcon = ({ type }: { type: SanahNotification["type"] }) => {
   switch (type) {
@@ -92,6 +93,7 @@ const NotificationIcon = ({ type }: { type: SanahNotification["type"] }) => {
 
 export default function CustomerNotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isRtl } = useLanguage();
   
   const unreadCount = mockNotifications.filter(n => !n.isRead).length;
   const [notifying, setNotifying] = useState(unreadCount > 0);
@@ -117,9 +119,9 @@ export default function CustomerNotificationDropdown() {
     const diffHours = Math.floor(diffMins / 60);
     const diffDays = Math.floor(diffHours / 24);
 
-    if (diffMins < 60) return `${diffMins} mins ago`;
-    if (diffHours < 24) return `${diffHours} hours ago`;
-    return `${diffDays} days ago`;
+    if (diffMins < 60) return isRtl ? `منذ ${diffMins} دقيقة` : `${diffMins} mins ago`;
+    if (diffHours < 24) return isRtl ? `منذ ${diffHours} ساعة` : `${diffHours} hours ago`;
+    return isRtl ? `منذ ${diffDays} يوم` : `${diffDays} days ago`;
   };
 
   return (
@@ -153,11 +155,11 @@ export default function CustomerNotificationDropdown() {
       <Dropdown
         isOpen={isOpen}
         onClose={closeDropdown}
-        className="absolute mt-[17px] flex h-[480px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark w-[calc(100vw-32px)] max-w-[350px] mr-4 sm:mr-0 sm:max-w-none sm:w-[361px] sm:-right-[240px] lg:right-0"
+        className="absolute mt-[17px] flex h-[480px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark w-[calc(100vw-32px)] sm:w-[361px] right-[-60px] sm:right-0 rtl:right-auto rtl:left-[-60px] sm:rtl:left-0 z-50 max-w-full"
       >
         <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-700">
           <h5 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-            Notifications
+            {isRtl ? "الإشعارات" : "Notifications"}
           </h5>
           <button
             onClick={toggleDropdown}
@@ -193,11 +195,11 @@ export default function CustomerNotificationDropdown() {
 
                 <div className="block flex-1 min-w-0">
                   <span className="mb-1 block text-sm font-semibold text-gray-900 dark:text-white/90">
-                    {notification.titleEn}
+                    {isRtl ? notification.titleAr : notification.titleEn}
                   </span>
                   
                   <span className="mb-2 block text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-                    {notification.messageEn}
+                    {isRtl ? notification.messageAr : notification.messageEn}
                   </span>
 
                   <span className="flex items-center gap-2 text-gray-400 text-xs dark:text-gray-500">
@@ -217,9 +219,9 @@ export default function CustomerNotificationDropdown() {
         <Link
           to="/customer/notifications"
           onClick={closeDropdown}
-          className="block px-4 py-2 mt-3 text-sm font-medium text-center text-brand-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-brand-400 dark:hover:bg-gray-700 transition-colors"
+          className="block px-4 py-2 mt-3 text-sm font-medium text-center text-brand-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-brand-400 dark:hover:bg-gray-700 transition-colors shrink-0"
         >
-          View All Notifications
+          {isRtl ? "عرض كل الإشعارات" : "View All Notifications"}
         </Link>
       </Dropdown>
     </div>

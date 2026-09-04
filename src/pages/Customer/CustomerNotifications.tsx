@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { mockNotifications, SanahNotification } from "../../components/customer/notifications/mockData";
+import { useLanguage } from "../../context/LanguageContext";
 
 const NotificationIcon = ({ type }: { type: SanahNotification["type"] }) => {
   switch (type) {
@@ -91,6 +92,7 @@ const NotificationIcon = ({ type }: { type: SanahNotification["type"] }) => {
 export default function CustomerNotifications() {
   const [notifications, setNotifications] = useState<SanahNotification[]>(mockNotifications);
   const navigate = useNavigate();
+  const { isRtl } = useLanguage();
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
@@ -120,15 +122,15 @@ export default function CustomerNotifications() {
     const diffHours = Math.floor(diffMins / 60);
     const diffDays = Math.floor(diffHours / 24);
 
-    if (diffMins < 60) return `${diffMins} mins ago`;
+    if (diffMins < 60) return isRtl ? `منذ ${diffMins} دقيقة` : `${diffMins} mins ago`;
     if (diffHours < 24) {
       const isToday = date.getDate() === now.getDate();
       if (isToday) {
-        return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+        return date.toLocaleTimeString(isRtl ? "ar-SA" : "en-US", { hour: "2-digit", minute: "2-digit" });
       }
-      return `${diffHours} hours ago`;
+      return isRtl ? `منذ ${diffHours} ساعة` : `${diffHours} hours ago`;
     }
-    return `${diffDays} days ago`;
+    return isRtl ? `منذ ${diffDays} يوم` : `${diffDays} days ago`;
   };
 
   // Group notifications
@@ -168,14 +170,14 @@ export default function CustomerNotifications() {
               <div className="flex-1 min-w-0">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 mb-2">
                   <h4 className={`text-base font-bold ${notification.isRead ? "text-gray-900 dark:text-white" : "text-brand-700 dark:text-brand-300"}`}>
-                    {notification.titleEn}
+                    {isRtl ? notification.titleAr : notification.titleEn}
                   </h4>
                   <span className="text-sm font-medium text-gray-500 whitespace-nowrap">
                     {formatTime(notification.createdAt)}
                   </span>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                  {notification.messageEn}
+                  {isRtl ? notification.messageAr : notification.messageEn}
                 </p>
               </div>
 
@@ -205,7 +207,7 @@ export default function CustomerNotifications() {
             <div>
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                  Notifications
+                  {isRtl ? "الإشعارات" : "Notifications"}
                 </h1>
                 {unreadCount > 0 && (
                   <span className="bg-brand-500 text-white text-sm font-semibold px-2.5 py-0.5 rounded-full">
@@ -214,7 +216,7 @@ export default function CustomerNotifications() {
                 )}
               </div>
               <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
-                Track the latest alerts regarding your requests and activity on the platform
+                {isRtl ? "تتبع أحدث التنبيهات المتعلقة بطلباتك ونشاطك على المنصة" : "Track the latest alerts regarding your requests and activity on the platform"}
               </p>
             </div>
           </div>
@@ -226,7 +228,7 @@ export default function CustomerNotifications() {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Mark all as read
+              {isRtl ? "تحديد الكل كمقروء" : "Mark all as read"}
             </button>
           )}
         </div>
@@ -236,9 +238,9 @@ export default function CustomerNotifications() {
       <div className="flex flex-col">
         {notifications.length > 0 ? (
           <>
-            <NotificationGroup title="Today" items={groups.today} />
-            <NotificationGroup title="Yesterday" items={groups.yesterday} />
-            <NotificationGroup title="Older" items={groups.older} />
+            <NotificationGroup title={isRtl ? "اليوم" : "Today"} items={groups.today} />
+            <NotificationGroup title={isRtl ? "أمس" : "Yesterday"} items={groups.yesterday} />
+            <NotificationGroup title={isRtl ? "أقدم" : "Older"} items={groups.older} />
           </>
         ) : (
           <div className="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-10 flex flex-col items-center justify-center text-center shadow-theme-sm min-h-[300px]">
@@ -249,10 +251,10 @@ export default function CustomerNotifications() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              No Notifications
+              {isRtl ? "لا توجد إشعارات" : "No Notifications"}
             </h3>
             <p className="text-gray-500 mb-6">
-              You don't have any new notifications at the moment.
+              {isRtl ? "ليس لديك أي إشعارات جديدة في الوقت الحالي." : "You don't have any new notifications at the moment."}
             </p>
           </div>
         )}
