@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import { useParams, Link } from "react-router";
 import { mockCustomerRequests, getStatusDetails, RequestStatus } from "../../components/customer/requests/mockData";
 import CustomerPaymentSection from "../../components/customer/payment/CustomerPaymentSection";
@@ -18,16 +18,8 @@ const STATUS_ORDER: RequestStatus[] = [
 
 export default function CustomerRequestDetails() {
   const { id } = useParams<{ id: string }>();
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const messageCount = id ? mockMessages.filter((m) => m.requestId === id).length : 0;
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
 
   const request = mockCustomerRequests.find((req) => req.id === id);
 

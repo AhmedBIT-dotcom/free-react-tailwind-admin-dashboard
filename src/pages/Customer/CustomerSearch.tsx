@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import CustomerSearchBar from "../../components/customer/search/CustomerSearchBar";
 import CustomerSearchFilters from "../../components/customer/search/CustomerSearchFilters";
 import CustomerSearchResults from "../../components/customer/search/CustomerSearchResults";
@@ -6,7 +7,7 @@ import CustomerSearchEmptyState from "../../components/customer/search/CustomerS
 import { mockServices } from "../../components/customer/search/mockData";
 
 export default function CustomerSearch() {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,14 +15,6 @@ export default function CustomerSearch() {
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [priceRange, setPriceRange] = useState(1500);
   const [minRating, setMinRating] = useState(0);
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
 
   const handleClearFilters = () => {
     setSearchQuery("");

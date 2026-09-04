@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useLanguage } from "../../../context/LanguageContext";
 import { ServiceRequest } from "../requests/mockData";
 import { Message } from "./mockMessages";
 
@@ -16,18 +16,7 @@ export default function CustomerConversationList({
   selectedRequestId,
   onSelect,
 }: CustomerConversationListProps) {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["dir"],
-    });
-    return () => observer.disconnect();
-  }, []);
+  const { isRtl } = useLanguage();
 
   const formatTime = (isoString: string) => {
     const date = new Date(isoString);

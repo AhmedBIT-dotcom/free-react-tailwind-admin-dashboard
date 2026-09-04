@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import { useCustomerFavorites } from "../../components/customer/favorites/mockData";
 import CustomerServiceBrowseCard from "../../components/customer/services/CustomerServiceBrowseCard";
@@ -6,16 +6,8 @@ import { BrowseServiceListing } from "../../components/customer/services/mockDat
 import { Link } from "react-router";
 
 export default function CustomerFavorites() {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const { favorites, removeFavorite } = useCustomerFavorites();
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className="w-full">

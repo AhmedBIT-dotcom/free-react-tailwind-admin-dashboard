@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useLanguage } from "../../../context/LanguageContext";
 import { Link } from "react-router";
 import { DocsIcon, ChatIcon } from "../../../icons";
 
 const CustomerQuickActions: React.FC = () => {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
+  const { isRtl } = useLanguage();
 
   const actions = [
     {

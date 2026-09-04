@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLanguage } from "../../../context/LanguageContext";
 import { Message } from "./mockMessages";
 import { ServiceRequest } from "../requests/mockData";
 
@@ -13,20 +14,9 @@ export default function CustomerChatWindow({
   messages,
   onSendMessage,
 }: CustomerChatWindowProps) {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["dir"],
-    });
-    return () => observer.disconnect();
-  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

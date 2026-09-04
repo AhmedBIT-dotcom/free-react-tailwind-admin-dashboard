@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import CustomerServiceCategories from "../../components/customer/services/CustomerServiceCategories";
 import CustomerServiceBrowseCard from "../../components/customer/services/CustomerServiceBrowseCard";
 import { mockBrowseCategories, mockBrowseServices } from "../../components/customer/services/mockData";
@@ -6,16 +7,8 @@ import { useCustomerFavorites, FavoriteItem } from "../../components/customer/fa
 
 export default function CustomerServices() {
   const { toggleFavorite, isFavorited } = useCustomerFavorites();
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
 
   const filteredServices = mockBrowseServices.filter((service) => {
     if (selectedCategory === "all") return true;

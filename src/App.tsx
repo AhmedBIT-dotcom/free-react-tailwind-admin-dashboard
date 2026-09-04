@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { LanguageProvider } from "./context/LanguageContext";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -45,7 +46,7 @@ import CustomerProfile from "./pages/Customer/CustomerProfile";
 
 export default function App() {
   return (
-    <>
+    <LanguageProvider>
       <Router>
         <ScrollToTop />
         <Routes>
@@ -116,6 +117,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </>
+    </LanguageProvider>
   );
 }

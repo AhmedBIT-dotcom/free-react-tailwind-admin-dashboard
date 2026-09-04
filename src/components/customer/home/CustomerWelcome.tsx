@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useLanguage } from "../../../context/LanguageContext";
 import { Link } from "react-router";
 
 const CustomerWelcome: React.FC = () => {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
+  const { isRtl } = useLanguage();
 
   return (
     <div className="relative overflow-hidden bg-brand-900 rounded-2xl shadow-theme-sm mb-6 dark:bg-gray-900 border border-transparent dark:border-gray-800">

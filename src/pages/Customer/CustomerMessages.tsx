@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import CustomerConversationList from "../../components/customer/messages/CustomerConversationList";
 import CustomerChatWindow from "../../components/customer/messages/CustomerChatWindow";
 import { mockMessages, Message } from "../../components/customer/messages/mockMessages";
@@ -6,24 +7,13 @@ import { mockCustomerRequests } from "../../components/customer/requests/mockDat
 import { Link, useSearchParams } from "react-router";
 
 export default function CustomerMessages() {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const [messagesState, setMessagesState] = useState<Message[]>(mockMessages);
   const [searchParams] = useSearchParams();
   const requestIdFromUrl = searchParams.get("requestId");
   
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
   const [hasInitialized, setHasInitialized] = useState(false);
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["dir"],
-    });
-    return () => observer.disconnect();
-  }, []);
 
   // Filter requests that actually have conversations, or you could show all accepted/in-progress requests
   // Here we derive the conversation list based on mockCustomerRequests

@@ -1,20 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import CustomerRequestCard from "../../components/customer/requests/CustomerRequestCard";
 import { mockCustomerRequests, RequestStatus } from "../../components/customer/requests/mockData";
 
 export default function CustomerRequests() {
-  const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
+  const { isRtl } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<RequestStatus | "ALL">("ALL");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "amount_desc" | "amount_asc">("newest");
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsRtl(document.documentElement.dir === "rtl");
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
 
   // Filter and Sort Logic
   const filteredRequests = mockCustomerRequests.filter((req) => {
