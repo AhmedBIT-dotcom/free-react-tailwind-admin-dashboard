@@ -40,6 +40,8 @@ import CustomerRequestDetails from "./pages/Customer/CustomerRequestDetails";
 import CustomerMessages from "./pages/Customer/CustomerMessages";
 import CustomerNotifications from "./pages/Customer/CustomerNotifications";
 import CustomerDisputes from "./pages/Customer/CustomerDisputes";
+import CustomerFavorites from "./pages/Customer/CustomerFavorites";
+import CustomerProfile from "./pages/Customer/CustomerProfile";
 
 export default function App() {
   return (
@@ -101,6 +103,8 @@ export default function App() {
             <Route path="messages" element={<CustomerMessages />} />
             <Route path="notifications" element={<CustomerNotifications />} />
             <Route path="disputes" element={<CustomerDisputes />} />
+            <Route path="favorites" element={<CustomerFavorites />} />
+            <Route path="profile" element={<CustomerProfile />} />
             {/* Additional Customer routes will be added here later */}
           </Route>
 

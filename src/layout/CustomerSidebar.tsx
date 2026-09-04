@@ -3,11 +3,9 @@ import { Link, useLocation } from "react-router";
 
 import {
   GridIcon,
-  GroupIcon,
   BoxCubeIcon,
   DocsIcon,
   ChatIcon,
-  MailIcon,
   HorizontaLDots,
   ChevronDownIcon
 } from "../icons";
@@ -69,12 +67,6 @@ const customerItems: NavItem[] = [
     path: "/customer/messages",
   },
   {
-    icon: <MailIcon />,
-    nameAr: "الإشعارات",
-    nameEn: "Notifications",
-    path: "/customer/notifications",
-  },
-  {
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -83,12 +75,6 @@ const customerItems: NavItem[] = [
     nameAr: "النزاعات",
     nameEn: "Disputes",
     path: "/customer/disputes",
-  },
-  {
-    icon: <GroupIcon />, 
-    nameAr: "حسابي",
-    nameEn: "Account",
-    path: "/customer/profile",
   },
 ];
 
@@ -306,7 +292,7 @@ const CustomerSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"

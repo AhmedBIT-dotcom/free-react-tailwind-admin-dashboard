@@ -1,6 +1,7 @@
 import React from "react";
 import CustomerServiceCard from "./CustomerServiceCard";
 import { ServiceListing } from "./mockData";
+import { useCustomerFavorites, FavoriteItem } from "../favorites/mockData";
 
 interface CustomerSearchResultsProps {
   isRtl: boolean;
@@ -8,6 +9,8 @@ interface CustomerSearchResultsProps {
 }
 
 const CustomerSearchResults: React.FC<CustomerSearchResultsProps> = ({ isRtl, results }) => {
+  const { toggleFavorite, isFavorited } = useCustomerFavorites();
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-6">
@@ -28,9 +31,43 @@ const CustomerSearchResults: React.FC<CustomerSearchResultsProps> = ({ isRtl, re
       </div>
 
       <div className="flex flex-col gap-5">
-        {results.map((service) => (
-          <CustomerServiceCard key={service.id} service={service} isRtl={isRtl} />
-        ))}
+        {results.map((service) => {
+          const identity = `search:${service.id}`;
+          const isFav = isFavorited(identity);
+
+          const handleToggle = () => {
+            const item: FavoriteItem = {
+              identity,
+              source: 'search',
+              originalId: service.id,
+              titleAr: service.titleAr,
+              titleEn: service.titleEn,
+              providerNameAr: service.providerNameAr,
+              providerNameEn: service.providerNameEn,
+              categoryAr: service.categoryAr,
+              categoryEn: service.categoryEn,
+              dailyPrice: service.dailyPrice,
+              rating: service.rating,
+              reviewCount: service.reviewCount,
+              serviceAreaAr: service.serviceAreaAr,
+              serviceAreaEn: service.serviceAreaEn,
+              image: service.image,
+              descriptionAr: service.descriptionAr,
+              descriptionEn: service.descriptionEn,
+            };
+            toggleFavorite(item);
+          };
+
+          return (
+            <CustomerServiceCard
+              key={service.id}
+              service={service}
+              isRtl={isRtl}
+              isFavorited={isFav}
+              onToggleFavorite={handleToggle}
+            />
+          );
+        })}
       </div>
     </div>
   );

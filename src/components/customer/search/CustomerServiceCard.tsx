@@ -5,12 +5,19 @@ import { Link } from "react-router";
 interface CustomerServiceCardProps {
   service: ServiceListing;
   isRtl: boolean;
+  isFavorited?: boolean;
+  onToggleFavorite?: () => void;
 }
 
-const CustomerServiceCard: React.FC<CustomerServiceCardProps> = ({ service, isRtl }) => {
+const CustomerServiceCard: React.FC<CustomerServiceCardProps> = ({
+  service,
+  isRtl,
+  isFavorited = false,
+  onToggleFavorite
+}) => {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-theme-sm hover:shadow-theme-md hover:border-brand-300 transition-all duration-300 dark:bg-gray-900 dark:border-gray-800 dark:hover:border-brand-500/50 flex flex-col sm:flex-row group">
-      
+
       {/* Image Section */}
       <div className="relative w-full sm:w-48 h-48 sm:h-auto shrink-0 bg-gray-100 dark:bg-gray-800">
         <img
@@ -18,9 +25,20 @@ const CustomerServiceCard: React.FC<CustomerServiceCardProps> = ({ service, isRt
           alt={isRtl ? service.titleAr : service.titleEn}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <button className="absolute top-3 right-3 p-2 bg-white/50 backdrop-blur-md rounded-full text-gray-700 hover:text-error-500 hover:bg-white transition-colors dark:bg-gray-900/50 dark:text-gray-300 dark:hover:text-error-400 dark:hover:bg-gray-800">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleFavorite) onToggleFavorite();
+          }}
+          className={`absolute top-3 right-3 p-2 backdrop-blur-md rounded-full transition-colors z-10 ${
+            isFavorited
+              ? "bg-error-50 text-error-500 hover:bg-error-100 dark:bg-error-500/20 dark:text-error-400 dark:hover:bg-error-500/30"
+              : "bg-white/50 text-gray-700 hover:text-error-500 hover:bg-white dark:bg-gray-900/50 dark:text-gray-300 dark:hover:text-error-400 dark:hover:bg-gray-800"
+          }`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill={isFavorited ? "currentColor" : "none"} xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" strokeWidth={isFavorited ? "0" : "2"} fill={isFavorited ? "currentColor" : "none"} strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
         <div className={`absolute bottom-3 ${isRtl ? "right-3" : "left-3"} bg-white dark:bg-gray-800 text-xs font-semibold px-2.5 py-1 rounded-md shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-1`}>

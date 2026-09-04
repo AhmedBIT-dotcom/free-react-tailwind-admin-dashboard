@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import CustomerServiceCategories from "../../components/customer/services/CustomerServiceCategories";
 import CustomerServiceBrowseCard from "../../components/customer/services/CustomerServiceBrowseCard";
 import { mockBrowseCategories, mockBrowseServices } from "../../components/customer/services/mockData";
+import { useCustomerFavorites, FavoriteItem } from "../../components/customer/favorites/mockData";
 
 export default function CustomerServices() {
+  const { toggleFavorite, isFavorited } = useCustomerFavorites();
   const [isRtl, setIsRtl] = useState(document.documentElement.dir === "rtl");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -118,9 +120,43 @@ export default function CustomerServices() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-        {filteredServices.map((service) => (
-          <CustomerServiceBrowseCard key={service.id} service={service} isRtl={isRtl} />
-        ))}
+        {filteredServices.map((service) => {
+          const identity = `services:${service.id}`;
+          const isFav = isFavorited(identity);
+
+          const handleToggle = () => {
+            const item: FavoriteItem = {
+              identity,
+              source: 'services',
+              originalId: service.id,
+              titleAr: service.titleAr,
+              titleEn: service.titleEn,
+              providerNameAr: service.providerNameAr,
+              providerNameEn: service.providerNameEn,
+              categoryAr: service.categoryAr,
+              categoryEn: service.categoryEn,
+              dailyPrice: service.dailyPrice,
+              rating: service.rating,
+              reviewCount: service.reviewCount,
+              serviceAreaAr: service.serviceAreaAr,
+              serviceAreaEn: service.serviceAreaEn,
+              image: service.image,
+              isProviderVerified: service.isProviderVerified,
+              providerAvatar: service.providerAvatar,
+            };
+            toggleFavorite(item);
+          };
+
+          return (
+            <CustomerServiceBrowseCard
+              key={service.id}
+              service={service}
+              isRtl={isRtl}
+              isFavorited={isFav}
+              onToggleFavorite={handleToggle}
+            />
+          );
+        })}
       </div>
 
       {filteredServices.length === 0 && (

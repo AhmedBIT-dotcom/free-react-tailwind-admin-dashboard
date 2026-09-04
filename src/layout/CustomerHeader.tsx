@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { useSidebar } from "../context/SidebarContext";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
 import CustomerNotificationDropdown from "../components/customer/notifications/CustomerNotificationDropdown";
-import UserDropdown from "../components/header/UserDropdown";
+import CustomerUserDropdown from "../components/customer/header/CustomerUserDropdown";
 
 const CustomerHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
@@ -155,7 +155,7 @@ const CustomerHeader: React.FC = () => {
             <ThemeToggleButton />
             <CustomerNotificationDropdown />
           </div>
-          <UserDropdown />
+          <CustomerUserDropdown />
         </div>
       </div>
     </header>
